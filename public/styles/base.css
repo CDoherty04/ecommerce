@@ -1,4 +1,40 @@
-body {
-    /* Change this later */
-    font-family: "Montserrat", sans-serif;
+* {
+    box-sizing: border-box;
+    font-family: inherit;
 }
+
+html {
+    font-family: "Montserrat", sans-serif;
+
+    --color-gray-50: rgb(245, 245, 245);
+    --color-gray-100: rgb(213, 213, 213);
+    --color-gray-200: rgb(142, 142, 142);
+    --color-gray-400: rgb(93, 93, 93);
+    --color-gray-600: rgb(57, 57, 57);
+    --color-gray-800: rgb(27, 27, 27);
+
+    --color-primary-50: rgb(255, 233, 209);
+    --color-primary-100: rgb(255, 220, 182);
+    --color-primary-200: rgb(255, 201, 143);
+    --color-primary-400: rgb(255, 174, 88);
+    --color-primary-600: rgb(255, 152, 43);
+    --color-primary-1000: rgb(255, 132, 0);
+
+    --color-contrast-1: rgb(84, 30, 12);
+    --color-contrast-2: white;
+
+    --color-error-100: rgb(242, 180, 180);
+    --color-error-500: rgb(228, 73, 73);
+
+    --space-1: .25rem;
+    --space-2: .5;
+    --space-3: 1rem;
+    --space-4: 2rem;
+    --space-5: 6rem;
+
+    --border-radius-small: 3px;
+    --border-radius-large: 6px;
+
+    --shadow-medium: 0 0 8px rgba(0, 0, 0, .2);
+}
+
