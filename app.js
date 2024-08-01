@@ -1,6 +1,6 @@
 const path = require("path")
 const express = require("express")
-const routes = require("./routes/routes")
+const authRoutes = require("./routes/auth-routes")
 
 const app = express()
 
@@ -9,6 +9,6 @@ app.set("views", path.join(__dirname, "views"))
 
 app.use(express.static("public"))
 
-app.use(routes)
+app.use(authRoutes)
 
 app.listen(3000)
