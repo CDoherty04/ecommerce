@@ -1,17 +1,16 @@
 * {
     box-sizing: border-box;
-    font-family: inherit;
 }
 
 html {
     font-family: "Montserrat", sans-serif;
 
-    --color-gray-50: rgb(245, 245, 245);
-    --color-gray-100: rgb(213, 213, 213);
-    --color-gray-200: rgb(142, 142, 142);
-    --color-gray-400: rgb(93, 93, 93);
-    --color-gray-600: rgb(57, 57, 57);
-    --color-gray-800: rgb(27, 27, 27);
+    --color-gray-50: rgb(233, 233, 233);
+    --color-gray-100: rgb(197, 197, 197);
+    --color-gray-200: rgb(114, 114, 114);
+    --color-gray-400: rgb(68, 68, 68);
+    --color-gray-600: rgb(23, 23, 23);
+    --color-gray-800: rgb(18, 18, 18);
 
     --color-primary-50: rgb(255, 233, 209);
     --color-primary-100: rgb(255, 220, 182);
@@ -27,7 +26,7 @@ html {
     --color-error-500: rgb(228, 73, 73);
 
     --space-1: .25rem;
-    --space-2: .5;
+    --space-2: .5rem;
     --space-3: 1rem;
     --space-4: 2rem;
     --space-5: 6rem;
@@ -38,3 +37,42 @@ html {
     --shadow-medium: 0 0 8px rgba(0, 0, 0, .2);
 }
 
+body {
+    background-color: var(--color-gray-600);
+    color: var(--color-gray-100);
+    margin: 0;
+}
+
+main {
+    width: 90%;
+    max-width: 50rem;
+    margin: 0 auto;
+}
+
+ul,
+ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary-400);
+}
+
+.btn {
+    font: inherit;
+    cursor: pointer;
+    padding: var(--space-2);
+    background-color: var(--color-primary-400);
+    color: var(--color-primary-100);
+    border: 1px solid var(--color-primary-400);
+    border-radius: var(--border-radius-small);
+}
+
+.btn:hover,
+.btn:active {
+    background-color: var(--color-primary-600);
+    border-color: var(--color-primary-1000);
+}
