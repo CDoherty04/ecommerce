@@ -3,13 +3,33 @@
 
 <head>
   <%- include("../includes/head", {pageTitle: "Login"}) %>
+  <link rel="stylesheet" href="styles/auth.css">
+  <link rel="stylesheet" href="styles/forms.css">
 </head>
 
 <body>
-  <%- include("../includes/header") %>
-  <main>
-      Login
-  </main>
+    <%- include("../includes/header") %>
+    <main>
+      <h1>Log In To Existing Account</h1>
+      <form action="/login" method="POST">
+        <p>
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" required>
+        </p>
+        <p>
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" minlength="6" required>
+        </p>
+        <p>
+          <label for="confirm-password">Confirm Password:</label>
+          <input type="password" name="confirm-password" id="confirm-password" required>
+        </p>
+        
+        <button class="btn">Log In</button>
+        <p id="switch-form"><a href="/signup">Signup Instead</a></p>
+  
+      </form>
+    </main>
   <%- include("../includes/footer") %>
 </body>
 
