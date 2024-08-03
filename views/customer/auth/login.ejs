@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-  <%- include("../includes/head", {pageTitle: "Login"}) %>
+  <%- include("../../shared/includes/head", {pageTitle: "Login"}) %>
   <link rel="stylesheet" href="styles/auth.css">
   <link rel="stylesheet" href="styles/forms.css">
 </head>
 
 <body>
-    <%- include("../includes/header") %>
+    <%- include("../../shared/includes/header") %>
     <main>
       <h1>Log In To Existing Account</h1>
       <form action="/login" method="POST">
@@ -26,7 +26,7 @@
   
       </form>
     </main>
-  <%- include("../includes/footer") %>
+  <%- include("../../shared/includes/footer") %>
 </body>
 
 </html>
