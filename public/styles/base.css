@@ -9,6 +9,7 @@ html {
     --color-gray-100: rgb(197, 197, 197);
     --color-gray-200: rgb(114, 114, 114);
     --color-gray-400: rgb(68, 68, 68);
+    --color-gray-500: rgb(40, 40, 40);
     --color-gray-600: rgb(23, 23, 23);
     --color-gray-800: rgb(18, 18, 18);
 
@@ -66,7 +67,7 @@ a {
     cursor: pointer;
     padding: var(--space-2);
     background-color: var(--color-primary-400);
-    color: var(--color-primary-100);
+    color: var(--color-primary-50);
     border: 1px solid var(--color-primary-400);
     border-radius: var(--border-radius-small);
 }
