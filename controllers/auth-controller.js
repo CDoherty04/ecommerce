@@ -2,6 +2,7 @@ const db = require("mongodb")
 
 const User = require("../models/user-model")
 const authUtil = require("../util/authentication")
+const validation = require("../util/validation")
 
 function getLogin(req, res) {
     res.render("customer/auth/login")
@@ -38,6 +39,24 @@ function getSignup(req, res) {
 }
 
 async function signup(req, res, next) {
+    if (
+        !validation.userDetailsAreValid(
+            req.body.email,
+            req.body.password,
+            req.body.name,
+            req.body.street,
+            req.body.postal,
+            req.body.city
+        ) ||
+        !validation.passwordIsConfirmed(
+            req.body.password,
+            req.body["confirm-password"]
+        )
+    ) {
+        res.redirect("/signup")
+        return
+    }
+
     const user = new User(
         req.body.email,
         req.body.password,
@@ -47,6 +66,12 @@ async function signup(req, res, next) {
         req.body.city)
 
     try {
+        const existsAlready = await user.existsAlready
+
+        if (existsAlready) {
+            res.redirect("/login")
+            return
+        }
         await user.signup()
     } catch (error) {
         next(error)
