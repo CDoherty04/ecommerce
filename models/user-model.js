@@ -14,6 +14,14 @@ class User {
         }
     }
 
+    getUserWithSameEmail() {
+        return db.getDb().collection("users").findOne({email: this.email})
+    }
+
+    hasMatchingPassword(hashword) {
+        return bcrypt.compare(this.password, hashword)
+    }j
+
     async signup() {
         const hashword = await bcrypt.hash(this.password, 12)
 
