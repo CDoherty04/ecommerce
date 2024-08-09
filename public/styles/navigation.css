@@ -1,4 +1,11 @@
+main {
+    margin-top: 6rem;
+}
+
 #main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     max-width: 60rem;
     margin: 0 auto;
@@ -11,18 +18,34 @@
     background-color: transparent;
 }
 
+#main-header nav {
+    display: none;
+}
+
 #logo a {
     font-weight: bold;
     font-size: 2rem;
 }
 
 .nav-items {
+    height: 100%;
     display: flex;
     align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .nav-items li {
     margin: 0 var(--space-2);
+}
+
+.nav-items button {
+    cursor: pointer;
+    font: inherit;
+    border: 1px solid var(--color-primary-100);
+    border-radius: var(--border-radius-small);
+    background-color: transparent;
+    padding: var(--space-2) var(--space-3);
 }
 
 #hamburger {
@@ -44,5 +67,73 @@
 }
 
 #mobile-menu {
-    display: none;
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    height: calc(100vh - 5rem);
+    width: 100%;
+    background-color: var(--color-gray-800);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#mobile-menu nav {
+    height: 20rem;
+    width: 90%;
+    margin: var(--space-3) auto;
+}
+
+#mobile-menu .nav-items a,
+#mobile-menu .nav-items button {
+    font-size: 2rem;
+    color: var(--color-primary-200);
+}
+
+@media (min-width: 48rem) {
+    main {
+        margin-top: 0;
+    }
+
+    #main-header {
+        position: static;
+    }
+
+    #main-header nav {
+        display: block;
+    }
+
+    #hamburger {
+        display: none;
+    }
+
+    #mobile-menu {
+        display: none;
+    }
+
+    .nav-items {
+        flex-direction: row;
+    }
+
+    .nav-items a {
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--border-radius-small);
+    }
+    
+    .nav-items button {
+        color: var(--color-primary-400);
+        border-color: var(--color-primary-400);
+    }
+
+    .nav-items button:hover,
+    .nav-items button:active {
+        color: var(--color-primary-600);
+        border-color: var(--color-primary-600);
+    }
+
+    .nav-items a:hover,
+    .nav-items a:active {
+        background-color: var(--color-gray-500);
+        color: var(--color-primary-400);
+    }
 }
