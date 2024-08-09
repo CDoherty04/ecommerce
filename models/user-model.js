@@ -19,7 +19,7 @@ class User {
     }
 
     async existsAlready() {
-        return existingUser = await this.getUserWithSameEmail()
+        return await this.getUserWithSameEmail()
     }
 
     hasMatchingPassword(hashword) {

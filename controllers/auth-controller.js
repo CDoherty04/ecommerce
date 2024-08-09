@@ -3,9 +3,19 @@ const db = require("mongodb")
 const User = require("../models/user-model")
 const authUtil = require("../util/authentication")
 const validation = require("../util/validation")
+const sessionFlash = require("../util/session-flash")
 
 function getLogin(req, res) {
-    res.render("customer/auth/login")
+    let sessionData = sessionFlash.getSessionData(req)
+
+    if (!sessionData) {
+        sessionData = {
+            email: null,
+            password: null
+        }
+    }
+    
+    res.render("customer/auth/login", {inputData: sessionData})
 }
 
 async function login(req, res, next) {
@@ -19,14 +29,28 @@ async function login(req, res, next) {
         return
     }
 
+    const sessionErrorData = {
+        errorMessage: "Invalid credentials - please try again",
+        email: user.email,
+        password: user.password
+    }
+
     if (!existingUser) {
-        return res.redirect("/login")
+        sessionFlash.flashDataToSession(req, sessionErrorData, function () {
+            res.redirect("/login")
+        })
+
+        return
     }
 
     const passwordIsCorrect = user.hasMatchingPassword(existingUser.password)
 
     if (!passwordIsCorrect) {
-        return res.redirect("/login")
+        sessionFlash.flashDataToSession(req, sessionErrorData, function () {
+            res.redirect("/login")
+        })
+
+        return
     }
 
     authUtil.createUserSession(req, existingUser, function () {
@@ -35,25 +59,53 @@ async function login(req, res, next) {
 }
 
 function getSignup(req, res) {
-    res.render("customer/auth/signup")
+    let sessionData = sessionFlash.getSessionData(req)
+
+    if (!sessionData) {
+        sessionData = {
+            email: null,
+            password: null,
+            confirmPassword: null,
+            fullname: null,
+            street: null,
+            zip: null,
+            city: null
+        }
+    }
+    res.render("customer/auth/signup", { inputData: sessionData })
 }
 
 async function signup(req, res, next) {
+    const enteredData = {
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body["confirm-password"],
+        fullname: req.body.fullname,
+        street: req.body.street,
+        zip: req.body.zip,
+        city: req.body.city
+    }
     if (
         !validation.userDetailsAreValid(
-            req.body.email,
-            req.body.password,
-            req.body.name,
-            req.body.street,
-            req.body.postal,
-            req.body.city
+            enteredData.email,
+            enteredData.password,
+            enteredData.fullname,
+            enteredData.street,
+            enteredData.zip,
+            enteredData.city
         ) ||
         !validation.passwordIsConfirmed(
-            req.body.password,
+            enteredData.password,
             req.body["confirm-password"]
         )
     ) {
-        res.redirect("/signup")
+        sessionFlash.flashDataToSession(req, {
+            errorMessage: "Please check your input.",
+            ...enteredData
+        }, function () {
+            res.redirect("/signup")
+        })
+
         return
     }
 
@@ -66,15 +118,22 @@ async function signup(req, res, next) {
         req.body.city)
 
     try {
-        const existsAlready = await user.existsAlready
+        const existsAlready = await user.existsAlready()
 
         if (existsAlready) {
-            res.redirect("/login")
+            sessionFlash.flashDataToSession(req, {
+                errorMessage: "User exists already, try logging in.",
+                ...enteredData
+            }, function () {
+                res.redirect("/signup")
+            })
+
             return
         }
         await user.signup()
     } catch (error) {
         next(error)
+
         return
     }
 

@@ -5,7 +5,7 @@ h1 {
 
 form {
     max-width: 25rem;
-    margin: var(--space-5) auto;
+    margin: var(--space-4) auto;
     padding: var(--space-4);
     background-color: var(--color-gray-500);
     border-radius: var(--border-radius-large);
