@@ -25,12 +25,14 @@ class Product {
 
     static async findByID(productID) {
         let prodId
+
         try {
             prodId = mongodb.ObjectId.createFromHexString(productID)
         } catch (error) {
             error.code = 404
             throw error
         }
+
         const product = await db.getDb().collection("products").findOne({ _id: prodId })
 
         if (!product) {
@@ -38,6 +40,7 @@ class Product {
             error.code = 404
             throw error
         }
+
         return new Product(product)
     }
 
