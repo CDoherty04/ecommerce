@@ -3,18 +3,26 @@ const deleteProductButtons = document.querySelectorAll(".product-item button")
 async function deleteProduct(event) {
     const button = event.target
     const productId = button.dataset.productid
+    const productTitle = button.dataset.producttitle
 
-    const response = await fetch("/admin/products/" + productId, {
-        method: "DELETE"
-    })
+    if (confirm(`Delete ${productTitle}?`)) {
+        const response = await fetch("/admin/products/" + productId, {
+            method: "DELETE"
+        })
 
-    if (!response.ok) {
-        alert("Couldn't delete product")
-        alert(productId)
-        return
+        if (!response.ok) {
+            alert("Couldn't delete product")
+            alert(productId)
+            return
+        }
+
+        button.parentElement.parentElement.parentElement.parentElement.remove()
+
+    } else {
+        console.log('User chose to not delete product');
     }
 
-    button.parentElement.parentElement.parentElement.parentElement.remove()
+
 }
 
 for (const deleteProductButton of deleteProductButtons) {
