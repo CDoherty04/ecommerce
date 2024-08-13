@@ -15,19 +15,11 @@ class Product {
         }
     }
 
-    static async findAll() {
-        const products = await db.getDb().collection("products").find().toArray()
-
-        return products.map(function (productDocument) {
-            return new Product(productDocument)
-        })
-    }
-
-    static async findByID(productID) {
+    static async findById(productId) {
         let prodId
 
         try {
-            prodId = mongodb.ObjectId.createFromHexString(productID)
+            prodId = new mongodb.ObjectId(productId)
         } catch (error) {
             error.code = 404
             throw error
@@ -42,6 +34,30 @@ class Product {
         }
 
         return new Product(product)
+    }
+
+    static async findAll() {
+        const products = await db.getDb().collection("products").find().toArray()
+
+        return products.map(function (productDocument) {
+            return new Product(productDocument)
+        })
+    }
+
+    static async findMultiple(ids) {
+        const productIds = ids.map(function (id) {
+            return new mongodb.ObjectId(id)
+        })
+
+        const products = await db
+            .getDb()
+            .collection("products")
+            .find({ _id: { $in: productIds } })
+            .toArray()
+
+        return products.map(function (productDocument) {
+            return new Product(productDocument)
+        })
     }
 
     updateImageData() {
@@ -59,7 +75,7 @@ class Product {
         }
 
         if (this.id) {
-            const productId = mongodb.ObjectId.createFromHexString(this.id)
+            const productId = new mongodb.ObjectId(this.id)
 
             if (!this.image) {
                 delete productData.image
@@ -76,14 +92,14 @@ class Product {
         }
     }
 
-    async replaceImage(newImage) {
+    replaceImage(newImage) {
         this.image = newImage
         this.updateImageData()
     }
 
     remove() {
         const productId = new mongodb.ObjectId(this.id)
-        return db.getDb().collection("products").deleteOne({ _id: this.id })
+        return db.getDb().collection("products").deleteOne({ _id: productId })
     }
 }
 

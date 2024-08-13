@@ -6,9 +6,10 @@ const db = require("./data/database")
 const createSessionConfig = require("./config/session")
 
 const errorHandlerMiddleware = require("./middlewares/error-handler")
-const checkAuthStatus = require("./middlewares/check-auth")
-const protectRoutes = require("./middlewares/protect-routes")
+const protectRoutesMiddleware = require("./middlewares/protect-routes")
+const checkAuthStatusMiddleware = require("./middlewares/check-auth")
 const cartMiddleware = require("./middlewares/cart")
+const updateCartPricesMiddleware = require("./middlewares/update-cart-prices")
 
 const baseRoutes = require("./routes/base-routes")
 const authRoutes = require("./routes/auth-routes")
@@ -32,14 +33,15 @@ const sessionConfig = createSessionConfig()
 app.use(expressSession(sessionConfig))
 
 app.use(cartMiddleware)
+app.use(updateCartPricesMiddleware)
 
-app.use(checkAuthStatus)
+app.use(checkAuthStatusMiddleware)
 
 app.use(baseRoutes)
 app.use(authRoutes)
 app.use(productRoutes)
 app.use("/cart", cartRoutes)
-app.use(protectRoutes)
+app.use(protectRoutesMiddleware)
 app.use("/orders", ordersRoutes)
 app.use("/admin", adminRoutes)
 
