@@ -15,6 +15,7 @@ const authRoutes = require("./routes/auth-routes")
 const productRoutes = require("./routes/product-routes")
 const adminRoutes = require("./routes/admin-routes")
 const cartRoutes = require("./routes/cart-routes")
+const ordersRoutes = require("./routes/orders-routes")
 
 const app = express()
 
@@ -39,6 +40,7 @@ app.use(authRoutes)
 app.use(productRoutes)
 app.use("/cart", cartRoutes)
 app.use(protectRoutes)
+app.use("/orders", ordersRoutes)
 app.use("/admin", adminRoutes)
 
 app.use(errorHandlerMiddleware)

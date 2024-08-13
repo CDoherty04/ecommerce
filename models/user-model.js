@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs")
+const mongodb = require("mongodb")
 
 const db = require("../data/database")
 
@@ -14,8 +15,14 @@ class User {
         }
     }
 
+    static findById(userId) {
+        const uid = new mongodb.ObjectId(userId)
+
+        return db.getDb().collection("users").findOne({ _id: uid }, { projection: { password: 0 } })
+    }
+
     getUserWithSameEmail() {
-        return db.getDb().collection("users").findOne({email: this.email})
+        return db.getDb().collection("users").findOne({ email: this.email })
     }
 
     async existsAlready() {
@@ -24,7 +31,7 @@ class User {
 
     hasMatchingPassword(hashword) {
         return bcrypt.compare(this.password, hashword)
-    }j
+    } j
 
     async signup() {
         const hashword = await bcrypt.hash(this.password, 12)
