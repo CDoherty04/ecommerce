@@ -6,6 +6,10 @@ const router = express.Router()
 
 router.post("/", ordersController.addOrder)
 
-router.get("/", ordersController.getOrders) //
+router.get("/", ordersController.getOrders)
+
+router.get("/success", ordersController.getSuccess)
+
+router.get("/cancel", ordersController.getFailure)
 
 module.exports = router
