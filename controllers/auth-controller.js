@@ -14,8 +14,8 @@ function getLogin(req, res) {
             password: null
         }
     }
-    
-    res.render("customer/auth/login", {inputData: sessionData})
+
+    res.render("customer/auth/login", { inputData: sessionData })
 }
 
 async function login(req, res, next) {
@@ -43,7 +43,7 @@ async function login(req, res, next) {
         return
     }
 
-    const passwordIsCorrect = user.hasMatchingPassword(existingUser.password)
+    const passwordIsCorrect = await user.hasMatchingPassword(existingUser.password)
 
     if (!passwordIsCorrect) {
         sessionFlash.flashDataToSession(req, sessionErrorData, function () {

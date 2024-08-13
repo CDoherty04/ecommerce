@@ -31,7 +31,7 @@ class User {
 
     hasMatchingPassword(hashword) {
         return bcrypt.compare(this.password, hashword)
-    } j
+    }
 
     async signup() {
         const hashword = await bcrypt.hash(this.password, 12)
